@@ -1,0 +1,30 @@
+{
+  "table_name": "chargeback",
+  "total_columns": 14,
+  "fields": {
+    "strings": [
+      "reconciliation_fee_processing_code",
+      "reason_code",
+      "merchant_id",
+      "merchant_country_code"
+    ],
+    "decimals_38_0": [
+      "chargeback_count"
+    ],
+    "decimals_38_2": [
+      "chargeback_amount",
+      "settlement_amount",
+      "transaction_amount",
+      "transaction_fee_amount",
+      "reconciliation_fee"
+    ],
+    "timestamps": [
+      "process_date",
+      "insert_date"
+    ],
+    "bigints": [
+      "chargeback_amount_cents",
+      "sequence_number"
+    ]
+  }
+}

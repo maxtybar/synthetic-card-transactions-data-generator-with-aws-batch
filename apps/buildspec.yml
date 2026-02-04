@@ -1,0 +1,40 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing Rust..."
+      - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - . ~/.cargo/env
+      - export CARGO_BUILD_JOBS=$(nproc)
+
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - IMAGE_TAG=$(echo $CODEBUILD_BUILD_ID | cut -d':' -f2)
+      - echo "Disabling Docker Buildx for single-arch builds..."
+      - docker buildx rm --all-inactive || true
+      - export DOCKER_BUILDKIT=0
+
+  build:
+    commands:
+      - echo "Build started on `date`"
+      - echo "Building Docker image..."
+      - cd data-generator
+      - docker build --platform linux/amd64 -t $ECR_REPO_URI:latest .
+      - echo "Building DynamoDB seeder..."
+      - cd ../dynamodb-seeder
+      - . ~/.cargo/env && cargo build --release --jobs $CARGO_BUILD_JOBS
+      - echo "Building job submitter..."
+      - cd ../job-submitter
+      - . ~/.cargo/env && cargo build --release --jobs $CARGO_BUILD_JOBS
+
+  post_build:
+    commands:
+      - echo "Pushing Docker image to ECR..."
+      - docker push $ECR_REPO_URI:latest
+      - echo "Seeding DynamoDB with 100k $CARD_BRAND PANs..."
+      - cd ../dynamodb-seeder && . ~/.cargo/env && CARD_BRAND="$CARD_BRAND" ./target/release/dynamodb-seeder
+      - echo "DynamoDB seeding completed, starting job submission..."
+      - cd ../job-submitter && . ~/.cargo/env && ./target/release/job-submitter --spot-queue-name "$SPOT_QUEUE_NAME" --ondemand-queue-name "$ONDEMAND_QUEUE_NAME" --job-definition "$JOB_DEFINITION_ARN" --payment-data-bucket-name "$PAYMENT_DATA_BUCKET_NAME" --clearing-bucket-name "$CLEARING_BUCKET_NAME" --authorization-bucket-name "$AUTHORIZATION_BUCKET_NAME" --chargeback-bucket-name "$CHARGEBACK_BUCKET_NAME" --hash-pan-table-name "$HASH_PAN_TABLE_NAME" --partition-counter-table-name "$PARTITION_COUNTER_TABLE_NAME" --card-brand "$CARD_BRAND" --network-brand "$NETWORK_BRAND"

@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# CDK
+cdk.out/
+.cdk.staging/
+cdk.context.json
+
+# Rust
+**/target/
+**/*.rs.bk
+Cargo.lock
+
+# Build outputs
+dist/
+build/
+*.js
+*.d.ts
+!jest.config.js
+!bin/*.js
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AWS
+.aws-sam/
+samconfig.toml
+
+# Testing
+coverage/
+*.test.js

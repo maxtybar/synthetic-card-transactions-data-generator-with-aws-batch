@@ -1,0 +1,16 @@
+{
+  "table_name": "clearing_hash",
+  "total_columns": 4,
+  "fields": {
+    "strings": [
+      "hash_pan"
+    ],
+    "timestamps": [
+      "process_date",
+      "insert_date"
+    ],
+    "bigints": [
+      "sequence_number"
+    ]
+  }
+}

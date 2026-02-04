@@ -1,0 +1,16 @@
+{
+  "BatchDataGeneratorStack": {
+    "CodeBuildProjectName": "005783449211-transactions-generator-build-and-submit",
+    "ClearingBucketName": "005783449211-clearing-data",
+    "HashPanTableName": "005783449211-hashed-pan-table",
+    "OnDemandJobQueueArn": "arn:aws:batch:us-east-1:005783449211:job-queue/005783449211-ondemand-queue-2026-01-15-16-45",
+    "AuthorizationBucketName": "005783449211-authorization-data",
+    "SpotJobQueueArn": "arn:aws:batch:us-east-1:005783449211:job-queue/005783449211-spot-queue-2026-01-15-16-45",
+    "SourceBucketName": "005783449211-build-source",
+    "PartitionCounterTableName": "005783449211-partition-counter-table",
+    "ChargebackBucketName": "005783449211-chargeback-data",
+    "AthenaQueryResultsBucketName": "005783449211-athena-query-results",
+    "PaymentDataBucketName": "005783449211-payment-data",
+    "BatchJobDefinitionArn": "arn:aws:batch:us-east-1:005783449211:job-definition/005783449211-transactions-generator-jobdef-2026-01-15-16-45:1"
+  }
+}

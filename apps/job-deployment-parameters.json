@@ -1,0 +1,7 @@
+{
+  "TARGET_TB": 10,
+  "INITIAL_LOAD": true,
+  "CARD_BRAND": "VISA", 
+  "NETWORK_BRAND": "VISA",
+  "CHARGEBACK_PERCENTAGE": 0.1
+}

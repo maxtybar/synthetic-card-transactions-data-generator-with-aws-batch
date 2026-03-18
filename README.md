@@ -242,19 +242,6 @@ make destroy-data-buckets
 
 **Note**: S3 buckets with generated data have `RemovalPolicy.RETAIN` to prevent accidental data loss. Use `make destroy-data-buckets` to explicitly delete them.
 
-## Key Features
-
-- ✅ **Sequential Numbering**: Atomic DynamoDB coordination ensures no gaps
-- ✅ **Multi-threaded**: 3 threads per job = 3x throughput
-- ✅ **Dual Upload**: Data stored in combined + specialized buckets
-- ✅ **Realistic Data**: Business logic based on actual payment processing
-- ✅ **Flexible Scaling**: Configure any data volume via `TARGET_TB`
-- ✅ **Two Generation Modes**: Initial load (historical) + nightly (incremental)
-- ✅ **Spot-friendly**: Deterministic partitioning with retry handling
-- ✅ **Private Network**: All traffic via VPC endpoints
-- ✅ **Snappy Compression**: Parquet files compressed for optimal storage
-- ✅ **Automatic Deployment**: One-command infrastructure + data generation
-
 ## Additional Documentation
 
 - `BATCH_WORKFLOW.md`: Detailed deployment and execution flow
